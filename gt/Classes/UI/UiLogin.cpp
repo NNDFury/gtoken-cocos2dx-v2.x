@@ -76,6 +76,10 @@ void UiLogin::onResponseLoginByFB(GoPlaySDK::IResult* result)
     CCLOG("IResult message: %s", result->getMessage().c_str());
     if (!result->getSucceeded()) {
         if ( result->getErrorCode() == GoPlaySDK::ErrorOauthUserNotExist) {
+
+            // disable touch
+            setTouchEnabled(false);
+
             //Need register
             this->setVisible(false);
             register_f = new AvaFrame_Register();
@@ -352,13 +356,11 @@ void UiLogin::increaseLoading(){
         CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
         nodeLoading = CCLayerColor::create(ccc4(0, 0, 0, 100), visibleSize.width, visibleSize.height);
         this->addChild( nodeLoading);
-
-        setTouchEnabled(true);
-        
     }else{
         nodeLoading->setVisible(true);
     }
-    
+
+    setTouchEnabled(true);    
 }
 
 bool UiLogin::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
@@ -377,6 +379,7 @@ void UiLogin::registerWithTouchDispatcher()
 void UiLogin::decreaseLoading(){
     if (nodeLoading) {
         nodeLoading->setVisible(false);
+        setTouchEnabled(false);
     }
 }
 
