@@ -70,10 +70,12 @@ public class AppActivity extends Cocos2dxActivity {
 					@Override
 					public void onError(FacebookException error) {
 						Log.e("DEBUG", error.getMessage());
+						nativeLoginFB("");
 					}
 
 					@Override
 					public void onCancel() {
+						nativeLoginFB("");
 					}
 		});
 	}
